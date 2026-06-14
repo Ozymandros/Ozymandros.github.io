@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andreu Martínez Vidal — Full-Stack &amp; AI Tooling Engineer</title>
+<meta name="description" content="Andreu Martínez Vidal builds cloud-native .NET microservices and AI developer tooling that bridges LLMs to real tools through the Model Context Protocol and Semantic Kernel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C0E1C;
+    --ink-2:#11142A;
+    --surface:#171B36;
+    --surface-2:#1E2342;
+    --line:#2A2F55;
+    --violet:#8A6CFF;
+    --violet-bright:#A78BFF;
+    --signal:#FFB454;
+    --text:#E7E9F5;
+    --muted:#9DA2C4;
+    --faint:#6F75A0;
+    --display:'Space Grotesk',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--ink);color:var(--text);
+    font-family:var(--body);line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(900px 500px at 78% -10%, rgba(138,108,255,.14), transparent 60%),
+      radial-gradient(700px 500px at 0% 8%, rgba(255,180,84,.06), transparent 55%);
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--violet);color:#fff}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .mono{font-family:var(--mono)}
+
+  /* faint engineering grid */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:
+      linear-gradient(rgba(138,108,255,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(138,108,255,.05) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 88%,transparent);
+            mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 88%,transparent);
+  }
+  main,header,footer{position:relative;z-index:1}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+    background:rgba(12,14,28,.72);border-bottom:1px solid var(--line)}
+  .nav .row{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:var(--mono);font-size:.84rem;letter-spacing:.02em;color:var(--text)}
+  .brand b{color:var(--violet-bright);font-weight:600}
+  .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+  .nav ul a{font-family:var(--mono);font-size:.78rem;color:var(--muted);transition:color .2s}
+  .nav ul a:hover{color:var(--text)}
+  @media(max-width:680px){.nav ul{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 70px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--signal);display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--signal);display:inline-block}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(2.5rem,6vw,4.1rem);
+    line-height:1.02;letter-spacing:-.02em;margin:0 0 22px}
+  h1 .accent{color:var(--violet-bright)}
+  .lede{font-size:1.16rem;color:var(--muted);max-width:30ch;margin:0 0 14px}
+  .lede strong{color:var(--text);font-weight:600}
+  .sub{font-size:1rem;color:var(--faint);max-width:42ch;margin:0 0 32px}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .btn{font-family:var(--mono);font-size:.82rem;padding:13px 20px;border-radius:9px;
+    border:1px solid var(--line);transition:.2s;display:inline-flex;align-items:center;gap:9px}
+  .btn-primary{background:var(--violet);border-color:var(--violet);color:#0C0E1C;font-weight:600}
+  .btn-primary:hover{background:var(--violet-bright);border-color:var(--violet-bright);transform:translateY(-2px)}
+  .btn-ghost{color:var(--muted)}
+  .btn-ghost:hover{color:var(--text);border-color:var(--violet);transform:translateY(-2px)}
+  .meta-line{margin-top:30px;font-family:var(--mono);font-size:.76rem;color:var(--faint);
+    display:flex;flex-wrap:wrap;gap:8px 18px}
+  .meta-line span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--signal)}
+
+  /* ---------- hero graph ---------- */
+  .graph-card{background:linear-gradient(160deg,var(--surface),var(--ink-2));
+    border:1px solid var(--line);border-radius:18px;padding:18px 18px 14px;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.7)}
+  .graph-head{display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:.68rem;color:var(--faint);
+    letter-spacing:.05em;margin-bottom:6px;padding:0 4px}
+  .graph-head .lights{display:flex;gap:6px}
+  .graph-head .lights i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block}
+  .graph-head .lights i:first-child{background:#3a2f55}
+  svg.graph{width:100%;height:auto;display:block}
+  .edge{stroke:var(--line);stroke-width:1.5;fill:none}
+  .edge-flow{stroke:var(--violet);stroke-width:1.6;fill:none;stroke-dasharray:5 9;
+    animation:flow 1.4s linear infinite;opacity:.85}
+  @keyframes flow{to{stroke-dashoffset:-28}}
+  .node rect,.node circle{stroke-width:1.5}
+  .node-label{font-family:var(--mono);font-size:11px;fill:var(--text)}
+  .node-kind{font-family:var(--mono);font-size:8.5px;fill:var(--faint);letter-spacing:.06em}
+  .n-provider rect{fill:#191d3c;stroke:#33396b}
+  .n-kernel circle{fill:rgba(138,108,255,.16);stroke:var(--violet)}
+  .n-kernel circle.pulse{fill:none;stroke:var(--violet);opacity:.5;
+    animation:pulse 2.4s ease-out infinite}
+  @keyframes pulse{0%{r:30;opacity:.5}100%{r:52;opacity:0}}
+  .n-target rect{fill:#1b1530;stroke:#5a3f8c}
+  .sig-dot{fill:var(--signal)}
+  .sig-dot.run{animation:travel 2.6s linear infinite}
+  @keyframes travel{0%{opacity:0}8%{opacity:1}92%{opacity:1}100%{opacity:0}}
+
+  /* ---------- sections ---------- */
+  section{padding:74px 0}
+  .sec-label{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--violet-bright);margin-bottom:14px}
+  .sec-title{font-family:var(--display);font-weight:600;font-size:clamp(1.7rem,3.6vw,2.4rem);
+    letter-spacing:-.015em;margin:0 0 12px;max-width:18ch}
+  .sec-intro{color:var(--muted);max-width:62ch;margin:0 0 40px;font-size:1.04rem}
+
+  /* focus pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .pillar{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 24px;
+    transition:.25s}
+  .pillar:hover{border-color:var(--violet);transform:translateY(-3px)}
+  .pillar .idx{font-family:var(--mono);font-size:.72rem;color:var(--signal);margin-bottom:16px}
+  .pillar h3{font-family:var(--display);font-size:1.18rem;font-weight:600;margin:0 0 10px}
+  .pillar p{color:var(--muted);font-size:.96rem;margin:0}
+
+  /* projects */
+  .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;
+    display:flex;flex-direction:column;transition:.25s;position:relative;overflow:hidden}
+  .card::after{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+  .card:hover{border-color:var(--violet);transform:translateY(-4px);
+    box-shadow:0 24px 50px -28px rgba(138,108,255,.5)}
+  .card.flag{grid-column:span 2;background:linear-gradient(150deg,var(--surface-2),var(--surface))}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}
+  .repo{font-family:var(--mono);font-size:.96rem;color:var(--violet-bright);font-weight:600;
+    word-break:break-word}
+  .flag .repo{font-size:1.18rem}
+  .badge{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--signal);border:1px solid rgba(255,180,84,.4);border-radius:999px;
+    padding:4px 9px;white-space:nowrap}
+  .card .role{font-family:var(--display);font-weight:600;font-size:1.04rem;margin:0 0 10px;color:var(--text)}
+  .flag .role{font-size:1.22rem}
+  .card p{color:var(--muted);font-size:.95rem;margin:0 0 18px;flex:1}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+  .tag{font-family:var(--mono);font-size:.68rem;color:var(--muted);background:var(--ink-2);
+    border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+  .card .link{font-family:var(--mono);font-size:.76rem;color:var(--muted);
+    display:inline-flex;align-items:center;gap:8px;transition:.2s;align-self:flex-start}
+  .card .link:hover{color:var(--violet-bright)}
+  .card .link svg{transition:transform .2s}
+  .card .link:hover svg{transform:translate(2px,-2px)}
+  .flag-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:start}
+  .facts{list-style:none;margin:0;padding:0;border-left:1px solid var(--line);padding-left:20px}
+  .facts li{font-size:.9rem;color:var(--muted);margin-bottom:12px;display:flex;gap:10px}
+  .facts li:last-child{margin-bottom:0}
+  .facts b{color:var(--text);font-family:var(--mono);font-size:.74rem;font-weight:600;
+    min-width:88px;text-transform:uppercase;letter-spacing:.04em;padding-top:1px}
+
+  /* ecosystem constellation */
+  .eco{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 28px}
+  .eco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+  .eco-col h4{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--signal);margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .eco-item{display:block;font-family:var(--mono);font-size:.82rem;color:var(--text);
+    padding:9px 0;border-bottom:1px dashed var(--line);transition:.2s}
+  .eco-item:last-child{border-bottom:none}
+  .eco-item:hover{color:var(--violet-bright);padding-left:6px}
+  .eco-item span{display:block;font-family:var(--body);font-size:.74rem;color:var(--faint);margin-top:2px}
+
+  /* stack */
+  .stack{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .stack-col h4{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--violet-bright);margin:0 0 14px}
+  .stack-col ul{list-style:none;margin:0;padding:0}
+  .stack-col li{font-size:.92rem;color:var(--muted);padding:6px 0;border-bottom:1px solid rgba(42,47,85,.5)}
+  .stack-col li:last-child{border-bottom:none}
+
+  /* contact */
+  .contact{text-align:center;border-top:1px solid var(--line);
+    background:radial-gradient(600px 300px at 50% 0%,rgba(138,108,255,.1),transparent 70%)}
+  .contact .sec-title{margin:0 auto 16px}
+  .contact p{color:var(--muted);max-width:50ch;margin:0 auto 30px}
+  .contact .cta-row{justify-content:center}
+
+  footer{border-top:1px solid var(--line);padding:28px 0}
+  footer .row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+    font-family:var(--mono);font-size:.74rem;color:var(--faint)}
+  footer a:hover{color:var(--violet-bright)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:920px){
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .lede,.sub{max-width:none}
+    .pillars,.stack{grid-template-columns:repeat(2,1fr)}
+    .eco-grid{grid-template-columns:1fr}
+    .flag-grid{grid-template-columns:1fr;gap:20px}
+    .facts{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:18px}
+  }
+  @media(max-width:620px){
+    .projects{grid-template-columns:1fr}
+    .card.flag{grid-column:span 1}
+    .pillars,.stack{grid-template-columns:1fr}
+    .wrap{padding:0 20px}
+    section{padding:56px 0}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap row">
+    <div class="brand">andreu<b>.</b>martínez<b>:~$</b></div>
+    <nav><ul>
+      <li><a href="#focus">focus</a></li>
+      <li><a href="#work">work</a></li>
+      <li><a href="#ecosystem">mcp</a></li>
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Full-stack · AI tooling · Catalonia</div>
+        <h1>Andreu<br>Martínez Vidal</h1>
+        <p class="lede">I build the <strong>connective tissue</strong> between AI models and real software.</p>
+        <p class="sub">Cloud-native .NET microservices on one side; on the other, developer tooling that wires LLMs into game engines and apps through the Model Context Protocol and Semantic Kernel.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/Ozymandros" target="_blank" rel="noopener">
+            View GitHub
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#work">See the work →</a>
+        </div>
+        <div class="meta-line mono">
+          <span><i class="dot"></i> 24 public repositories</span>
+          <span><i class="dot"></i> @ Pasiona</span>
+          <span><i class="dot"></i> C# · TypeScript · Python</span>
+        </div>
+      </div>
+
+      <!-- signature: orchestration node graph -->
+      <div class="graph-card reveal">
+        <div class="graph-head">
+          <span>orchestration.graph</span>
+          <span class="lights"><i></i><i></i><i></i></span>
+        </div>
+        <svg class="graph" viewBox="0 0 460 360" role="img" aria-label="Diagram: AI providers feed a Semantic Kernel core that drives tool targets through the Model Context Protocol.">
+          <!-- edges providers -> kernel -->
+          <path class="edge" d="M118,58 C190,58 200,160 232,178"/>
+          <path class="edge" d="M118,126 C190,126 200,168 232,180"/>
+          <path class="edge" d="M118,194 C190,194 200,182 232,182"/>
+          <path class="edge" d="M118,262 C190,262 200,200 232,184"/>
+          <!-- flow edges kernel -> targets -->
+          <path class="edge-flow" d="M286,182 C340,150 350,92 392,82"/>
+          <path class="edge-flow" d="M286,182 C345,182 350,182 392,182"/>
+          <path class="edge-flow" d="M286,182 C340,214 350,272 392,282"/>
+
+          <!-- providers -->
+          <g class="node n-provider">
+            <rect x="20" y="42" width="98" height="32" rx="7"/>
+            <text class="node-label" x="34" y="56">LLM text</text>
+            <text class="node-kind" x="34" y="67">provider</text>
+          </g>
+          <g class="node n-provider">
+            <rect x="20" y="110" width="98" height="32" rx="7"/>
+            <text class="node-label" x="34" y="124">Image gen</text>
+            <text class="node-kind" x="34" y="135">stability · gemini</text>
+          </g>
+          <g class="node n-provider">
+            <rect x="20" y="178" width="98" height="32" rx="7"/>
+            <text class="node-label" x="34" y="192">Audio</text>
+            <text class="node-kind" x="34" y="203">elevenlabs</text>
+          </g>
+          <g class="node n-provider">
+            <rect x="20" y="246" width="98" height="32" rx="7"/>
+            <text class="node-label" x="34" y="260">Sprites</text>
+            <text class="node-kind" x="34" y="271">2D assets</text>
+          </g>
+
+          <!-- kernel -->
+          <g class="node n-kernel">
+            <circle class="pulse" cx="259" cy="182" r="30"/>
+            <circle cx="259" cy="182" r="30"/>
+            <text class="node-label" x="259" y="178" text-anchor="middle" style="font-weight:600">Semantic</text>
+            <text class="node-label" x="259" y="191" text-anchor="middle" style="font-weight:600">Kernel</text>
+          </g>
+          <text class="node-kind" x="259" y="232" text-anchor="middle">MCP orchestration</text>
+
+          <!-- targets -->
+          <g class="node n-target">
+            <rect x="392" y="66" width="58" height="32" rx="7"/>
+            <text class="node-label" x="404" y="86">Unity</text>
+          </g>
+          <g class="node n-target">
+            <rect x="392" y="166" width="58" height="32" rx="7"/>
+            <text class="node-label" x="404" y="186">Godot</text>
+          </g>
+          <g class="node n-target">
+            <rect x="392" y="266" width="58" height="32" rx="7"/>
+            <text class="node-label" x="406" y="286">ERP</text>
+          </g>
+
+          <!-- travelling signal dots -->
+          <circle class="sig-dot run" r="3.5"><animateMotion dur="2.6s" repeatCount="indefinite" path="M286,182 C340,150 350,92 392,82"/></circle>
+          <circle class="sig-dot run" r="3.5" style="animation-delay:.9s"><animateMotion dur="2.6s" begin="0.9s" repeatCount="indefinite" path="M286,182 C345,182 350,182 392,182"/></circle>
+          <circle class="sig-dot run" r="3.5" style="animation-delay:1.7s"><animateMotion dur="2.6s" begin="1.7s" repeatCount="indefinite" path="M286,182 C340,214 350,272 392,282"/></circle>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOCUS -->
+  <section id="focus">
+    <div class="wrap">
+      <div class="sec-label reveal">What I work on</div>
+      <h2 class="sec-title reveal">Three threads run through the repositories.</h2>
+      <p class="sec-intro reveal">The public work clusters into a backend craft, an AI-tooling specialism, and a habit of rebuilding the same product across frameworks to learn each one properly.</p>
+      <div class="pillars">
+        <div class="pillar reveal">
+          <div class="idx">// 01</div>
+          <h3>Cloud-native .NET</h3>
+          <p>Microservices on .NET 10 orchestrated with Aspire, meshed with Dapr, and shipped to Azure Container Apps. Database-per-service, a YARP gateway, and CI/CD with quality gates wired in from the start.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="idx">// 02</div>
+          <h3>AI developer tooling</h3>
+          <p>Bridging LLMs to real tools through the Model Context Protocol and Microsoft Semantic Kernel — provider-agnostic MCP servers, kernel plugins, and desktop generators that talk to live game-engine editors.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="idx">// 03</div>
+          <h3>Full-stack, many frameworks</h3>
+          <p>The same ERP front end rebuilt in Vue, Vite, Angular and Blazor, packaged with Electron, backed by FastAPI and Node, with Flutter on mobile. Breadth chosen on purpose, not by accident.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-label reveal">Selected work</div>
+      <h2 class="sec-title reveal">Projects worth opening.</h2>
+      <p class="sec-intro reveal">A focused slice of 24 public repositories — the ones that best show how the threads come together.</p>
+
+      <div class="projects">
+        <!-- ERP flagship -->
+        <article class="card flag reveal">
+          <div class="card-top">
+            <div class="repo">ERP.Microservices</div>
+            <span class="badge">Flagship</span>
+          </div>
+          <div class="flag-grid">
+            <div>
+              <h3 class="role">Cloud-native ERP platform</h3>
+              <p>Six independent services — Auth, Billing, Inventory, Orders, Purchasing and Sales — each with its own database, fronted by a YARP gateway and connected through Dapr for service invocation, pub/sub and state. Runs locally under Aspire and deploys to Azure Container Apps with auto-scaling. Build, test, coverage and security are enforced through GitHub Actions, SonarCloud and CodeQL, with a generated DocFX documentation site.</p>
+              <div class="tags">
+                <span class="tag">.NET 10</span><span class="tag">Aspire</span><span class="tag">Dapr</span>
+                <span class="tag">YARP</span><span class="tag">Azure Container Apps</span><span class="tag">Docker</span><span class="tag">SonarCloud</span>
+              </div>
+              <a class="link" href="https://github.com/Ozymandros/ERP.Microservices" target="_blank" rel="noopener">github.com/Ozymandros/ERP.Microservices
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h10v10h-2V5.4L3.4 14 2 12.6 10.6 4H4V2z"/></svg></a>
+            </div>
+            <ul class="facts">
+              <li><b>Services</b><span>6 bounded contexts, DB-per-service</span></li>
+              <li><b>Mesh</b><span>Dapr service invocation &amp; pub/sub</span></li>
+              <li><b>Cache</b><span>Shared Azure Redis</span></li>
+              <li><b>Deploy</b><span>azd up → Container Apps</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Unity-Generator flagship -->
+        <article class="card flag reveal">
+          <div class="card-top">
+            <div class="repo">Unity-Generator</div>
+            <span class="badge">Flagship</span>
+          </div>
+          <div class="flag-grid">
+            <div>
+              <h3 class="role">AI asset &amp; code studio for Unity</h3>
+              <p>A local-first desktop app that generates Unity-ready C#, UI prefabs (both uGUI and UI Toolkit), pixel-art sprite sheets, text and audio from your choice of cloud AI providers. An Electron + Vue shell drives a FastAPI backend orchestrated by Semantic Kernel, including a custom Unity MCP server for real-time interaction with the live Editor. Keys stay local; output drops straight into an active Unity project. Full feature parity across Windows, Linux and macOS.</p>
+              <div class="tags">
+                <span class="tag">TypeScript</span><span class="tag">Vue 3</span><span class="tag">Electron</span>
+                <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Semantic Kernel</span><span class="tag">MCP</span>
+              </div>
+              <a class="link" href="https://github.com/Ozymandros/Unity-Generator" target="_blank" rel="noopener">github.com/Ozymandros/Unity-Generator
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h10v10h-2V5.4L3.4 14 2 12.6 10.6 4H4V2z"/></svg></a>
+            </div>
+            <ul class="facts">
+              <li><b>Shell</b><span>Electron + Vue, packaged installers</span></li>
+              <li><b>Backend</b><span>FastAPI + Semantic Kernel agents</span></li>
+              <li><b>Live link</b><span>Unity MCP server → Editor</span></li>
+              <li><b>Tests</b><span>Vitest + Playwright in CI</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Godot-Generator -->
+        <article class="card reveal">
+          <div class="card-top"><div class="repo">Godot-Generator</div></div>
+          <h3 class="role">AI content generation for Godot</h3>
+          <p>A Blazor WebAssembly app on an ASP.NET Core host (with an optional Electron shell) that connects Semantic Kernel to a Godot MCP server through a published NuGet plugin. Generation is modality-aware — it narrows the exposed MCP tool surface per task across lighting, camera, shaders, nodes and scenes. Built on .NET 10 with xUnit/Moq and an enforced 80% global coverage gate.</p>
+          <div class="tags">
+            <span class="tag">C#</span><span class="tag">Blazor WASM</span><span class="tag">ASP.NET Core</span>
+            <span class="tag">Semantic Kernel</span><span class="tag">MCP</span><span class="tag">.NET 10</span>
+          </div>
+          <a class="link" href="https://github.com/Ozymandros/Godot-Generator" target="_blank" rel="noopener">github.com/Ozymandros/Godot-Generator
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h10v10h-2V5.4L3.4 14 2 12.6 10.6 4H4V2z"/></svg></a>
+        </article>
+
+        <!-- image-gen-mcp -->
+        <article class="card reveal">
+          <div class="card-top"><div class="repo">image-gen-mcp</div></div>
+          <h3 class="role">Provider-agnostic image MCP server</h3>
+          <p>A Model Context Protocol server that switches between Stability AI and Google Gemini Imagen from runtime tool arguments — the MCP client never notices the change. Hexagonal architecture means a new provider is one interface and zero edits to existing files. Ships with fail-fast config validation, Polly retries, FluentValidation, and distributes as a global dotnet tool that plugs straight into Claude Desktop.</p>
+          <div class="tags">
+            <span class="tag">C#</span><span class="tag">.NET 10</span><span class="tag">MCP</span>
+            <span class="tag">Hexagonal</span><span class="tag">Polly</span>
+          </div>
+          <a class="link" href="https://github.com/Ozymandros/image-gen-mcp" target="_blank" rel="noopener">github.com/Ozymandros/image-gen-mcp
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h10v10h-2V5.4L3.4 14 2 12.6 10.6 4H4V2z"/></svg></a>
+        </article>
+
+        <!-- Leaf-Lens -->
+        <article class="card reveal">
+          <div class="card-top"><div class="repo">Leaf-Lens</div></div>
+          <h3 class="role">Plant identification, camera-first</h3>
+          <p>A Flutter mobile app that identifies plants straight from the device camera — a lens for the garden. A change of pace from the .NET and MCP work that keeps the mobile and Dart muscles warm.</p>
+          <div class="tags"><span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">Mobile</span></div>
+          <a class="link" href="https://github.com/Ozymandros/Leaf-Lens" target="_blank" rel="noopener">github.com/Ozymandros/Leaf-Lens
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h10v10h-2V5.4L3.4 14 2 12.6 10.6 4H4V2z"/></svg></a>
+        </article>
+
+        <!-- ERP frontends -->
+        <article class="card reveal">
+          <div class="card-top"><div class="repo">erp-frontend-{vue,vite,ng}</div></div>
+          <h3 class="role">One ERP, four front ends</h3>
+          <p>The ERP client rebuilt across Vue 3, Vite, Angular and an agentic variant — a deliberate study in how each framework shapes the same problem. Evidence of framework breadth rather than allegiance to one stack.</p>
+          <div class="tags"><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">Angular</span><span class="tag">TypeScript</span></div>
+          <a class="link" href="https://github.com/Ozymandros?tab=repositories" target="_blank" rel="noopener">browse the frontends
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h10v10h-2V5.4L3.4 14 2 12.6 10.6 4H4V2z"/></svg></a>
+        </article>
+
+        <!-- airspace-simulator -->
+        <article class="card reveal">
+          <div class="card-top"><div class="repo">airspace-simulator</div><span class="badge">Live demo</span></div>
+          <h3 class="role">Autonomous biplanes, in the browser</h3>
+          <p>A self-contained 3D airspace sim where twenty color-coded biplanes fly an enclosed volume over procedural terrain. Three.js handles rendering; Yuka drives the steering, with separation, alignment and cohesion keeping the fleet flocking naturally inside a soft-bounded cube. Follow any aircraft, scrub time scale, read live telemetry — and zero build step.</p>
+          <div class="tags">
+            <span class="tag">Three.js</span><span class="tag">Yuka</span><span class="tag">WebGL</span>
+            <span class="tag">Flocking AI</span><span class="tag">Single-file HTML</span>
+          </div>
+          <a class="link" href="https://github.com/Ozymandros/airspace-simulator" target="_blank" rel="noopener">github.com/Ozymandros/airspace-simulator
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h10v10h-2V5.4L3.4 14 2 12.6 10.6 4H4V2z"/></svg></a>
+        </article>
+
+        <!-- solar-system -->
+        <article class="card reveal">
+          <div class="card-top"><div class="repo">solar-system</div><span class="badge">Live demo</span></div>
+          <h3 class="role">The Solar System, with the real maths</h3>
+          <p>An interactive 3D Solar System in Three.js: the Sun, eight planets and 54 major moons on true elliptical orbits, solved from J2000.0 orbital elements via Kepler's equation — retrograde moons included. Lock the camera to any body, scrub time from 0× to 100×, and open an info panel with live distance, period and physical data per planet.</p>
+          <div class="tags">
+            <span class="tag">Three.js</span><span class="tag">WebGL</span><span class="tag">Keplerian orbits</span>
+            <span class="tag">JavaScript</span><span class="tag">Single-file HTML</span>
+          </div>
+          <a class="link" href="https://github.com/Ozymandros/solar-system" target="_blank" rel="noopener">github.com/Ozymandros/solar-system
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h10v10h-2V5.4L3.4 14 2 12.6 10.6 4H4V2z"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ECOSYSTEM -->
+  <section id="ecosystem">
+    <div class="wrap">
+      <div class="sec-label reveal">The differentiator</div>
+      <h2 class="sec-title reveal">An MCP &amp; Semantic Kernel ecosystem.</h2>
+      <p class="sec-intro reveal">Rather than one monolith, the AI tooling is built as a constellation of small, composable pieces: Semantic Kernel plugins that speak to providers, MCP servers that expose tools, and a bridge to hold it together. Add a capability by implementing an interface — not by editing what already works.</p>
+      <div class="eco reveal">
+        <div class="eco-grid">
+          <div class="eco-col">
+            <h4>Semantic Kernel plugins</h4>
+            <a class="eco-item" href="https://github.com/Ozymandros/ImageGen-MCP-SK-Plugin" target="_blank" rel="noopener">ImageGen-MCP-SK-Plugin<span>Image generation MCP, SK-wrapped</span></a>
+            <a class="eco-item" href="https://github.com/Ozymandros/ElevenLabs-MCP-SK-Plugin" target="_blank" rel="noopener">ElevenLabs-MCP-SK-Plugin<span>ElevenLabs audio via MCP</span></a>
+            <a class="eco-item" href="https://github.com/Ozymandros/UnityMcpPlugin" target="_blank" rel="noopener">UnityMcpPlugin<span>SK plugin for the Unity MCP server</span></a>
+            <a class="eco-item" href="https://github.com/Ozymandros/GodotMcpPlugin" target="_blank" rel="noopener">GodotMcpPlugin<span>Published on NuGet</span></a>
+          </div>
+          <div class="eco-col">
+            <h4>MCP servers</h4>
+            <a class="eco-item" href="https://github.com/Ozymandros/Unity-MCP-Server" target="_blank" rel="noopener">Unity-MCP-Server<span>Live Unity Editor tools</span></a>
+            <a class="eco-item" href="https://github.com/Ozymandros/Godot-MCP-Server" target="_blank" rel="noopener">Godot-MCP-Server<span>godot-mcp global tool</span></a>
+            <a class="eco-item" href="https://github.com/Ozymandros/image-gen-mcp" target="_blank" rel="noopener">image-gen-mcp<span>Provider-agnostic image server</span></a>
+            <a class="eco-item" href="https://github.com/Ozymandros/unity-mcp-server-plugin" target="_blank" rel="noopener">unity-mcp-server-plugin<span>Python server plugin</span></a>
+          </div>
+          <div class="eco-col">
+            <h4>Glue &amp; shells</h4>
+            <a class="eco-item" href="https://github.com/Ozymandros/electron-message-bridge" target="_blank" rel="noopener">electron-message-bridge<span>Typed IPC across Electron</span></a>
+            <a class="eco-item" href="https://github.com/Ozymandros/Unity-Generator" target="_blank" rel="noopener">Unity-Generator<span>Desktop generator shell</span></a>
+            <a class="eco-item" href="https://github.com/Ozymandros/Godot-Generator" target="_blank" rel="noopener">Godot-Generator<span>Blazor + Electron shell</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="wrap">
+      <div class="sec-label reveal">Toolbox</div>
+      <h2 class="sec-title reveal">The stack behind the work.</h2>
+      <div class="stack" style="margin-top:30px">
+        <div class="stack-col reveal">
+          <h4>Languages</h4>
+          <ul><li>C#</li><li>TypeScript</li><li>Python</li><li>Dart</li><li>HTML / CSS</li></ul>
+        </div>
+        <div class="stack-col reveal">
+          <h4>Backend &amp; cloud</h4>
+          <ul><li>.NET 10 · ASP.NET Core</li><li>Aspire · Dapr · YARP</li><li>Azure Container Apps</li><li>FastAPI · Node.js</li><li>Docker · Azure SQL · Redis</li></ul>
+        </div>
+        <div class="stack-col reveal">
+          <h4>AI &amp; orchestration</h4>
+          <ul><li>Semantic Kernel</li><li>Model Context Protocol</li><li>Multi-provider LLMs</li><li>Stability AI · Gemini Imagen</li><li>ElevenLabs</li></ul>
+        </div>
+        <div class="stack-col reveal">
+          <h4>Frontend &amp; quality</h4>
+          <ul><li>Vue 3 · Angular · Vite</li><li>Blazor · Electron · Flutter</li><li>xUnit · Vitest · Playwright</li><li>GitHub Actions · SonarCloud</li><li>CodeQL · DocFX</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="sec-label reveal" style="text-align:center">Get in touch</div>
+      <h2 class="sec-title reveal">Let's build the bridge between models and tools.</h2>
+      <p class="reveal">Open to work and collaboration on .NET platforms, AI developer tooling, and anything that needs LLMs wired into real systems. The code is all public — start there.</p>
+      <div class="cta-row reveal">
+        <a class="btn btn-primary" href="https://github.com/Ozymandros" target="_blank" rel="noopener">
+          github.com/Ozymandros
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>© 2026 Andreu Martínez Vidal</span>
+    <span>Catalonia, Spain · @ Pasiona</span>
+    <a href="https://github.com/Ozymandros" target="_blank" rel="noopener">github.com/Ozymandros</a>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
