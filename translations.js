@@ -17,6 +17,7 @@ const TRANSLATIONS = {
     'hero.sub': 'Cloud-native .NET microservices on one side; on the other, developer tooling that wires LLMs into game engines and apps through the Model Context Protocol and Semantic Kernel.',
     'hero.cta.github': 'View GitHub',
     'hero.cta.work': 'See the work →',
+    'hero.cta.cv': 'Résumé (PDF)',
     'hero.meta.repos': '24 public repositories',
     'hero.meta.pasiona': '@ Pasiona',
     'hero.meta.languages': 'C# · TypeScript · Python',
@@ -132,10 +133,12 @@ const TRANSLATIONS = {
     'credentials.lang.es': 'Spanish (Native)',
     'credentials.lang.ca': 'Catalan (Native)',
     'credentials.lang.en': 'English (B1)',
+    'credentials.cv.intro': 'Summarized on this page — <a href="./CV_Andreu_Martinez_Optimizado.pdf" target="_blank" rel="noopener">download the full résumé (PDF)</a> for roles in .NET, cloud-native, and AI developer tooling.',
 
     'contact.label': 'Get in touch',
     'contact.title': "Let's build the bridge between models and tools.",
     'contact.body': 'Open to work and collaboration on .NET platforms, AI developer tooling, and anything that needs LLMs wired into real systems. The code is all public — start there.',
+    'contact.cta.cv': 'Résumé (PDF)',
 
     'footer.location': 'Catalonia, Spain · @ Pasiona'
   },
@@ -158,6 +161,7 @@ const TRANSLATIONS = {
     'hero.sub': 'Por un lado, microservicios .NET cloud-native; por otro, herramientas de desarrollo que conectan los LLM con motores de juego y aplicaciones mediante el Model Context Protocol y Semantic Kernel.',
     'hero.cta.github': 'Ver GitHub',
     'hero.cta.work': 'Ver el trabajo →',
+    'hero.cta.cv': 'CV (PDF)',
     'hero.meta.repos': '24 repositorios públicos',
     'hero.meta.pasiona': '@ Pasiona',
     'hero.meta.languages': 'C# · TypeScript · Python',
@@ -274,10 +278,12 @@ const TRANSLATIONS = {
     'credentials.lang.es': 'Español (Nativo)',
     'credentials.lang.ca': 'Catalán (Nativo)',
     'credentials.lang.en': 'Inglés (B1)',
+    'credentials.cv.intro': 'Resumido en esta página — <a href="./CV_Andreu_Martinez_Optimizado.pdf" target="_blank" rel="noopener">descarga el CV completo (PDF)</a> para roles en .NET, cloud-native y herramientas de desarrollo con IA.',
 
     'contact.label': 'Contacto',
     'contact.title': 'Construyamos el puente entre modelos y herramientas.',
     'contact.body': 'Abierto a trabajo y colaboración en plataformas .NET, herramientas de desarrollo con IA y todo lo que necesite conectar LLM con sistemas reales. Todo el código es público — empieza ahí.',
+    'contact.cta.cv': 'CV (PDF)',
 
     'footer.location': 'Cataluña, España · @ Pasiona'
   },
@@ -300,6 +306,7 @@ const TRANSLATIONS = {
     'hero.sub': 'D\'una banda, microserveis .NET cloud-native; de l\'altra, eines de desenvolupament que connecten els LLM amb motors de joc i aplicacions mitjançant el Model Context Protocol i Semantic Kernel.',
     'hero.cta.github': 'Veure GitHub',
     'hero.cta.work': 'Veure el treball →',
+    'hero.cta.cv': 'CV (PDF)',
     'hero.meta.repos': '24 repositoris públics',
     'hero.meta.pasiona': '@ Pasiona',
     'hero.meta.languages': 'C# · TypeScript · Python',
@@ -416,10 +423,12 @@ const TRANSLATIONS = {
     'credentials.lang.es': 'Espanyol (Natiu)',
     'credentials.lang.ca': 'Català (Natiu)',
     'credentials.lang.en': 'Anglès (B1)',
+    'credentials.cv.intro': 'Resumit en aquesta pàgina — <a href="./CV_Andreu_Martinez_Optimizado.pdf" target="_blank" rel="noopener">descarrega el CV complet (PDF)</a> per a rols en .NET, cloud-native i eines de desenvolupament amb IA.',
 
     'contact.label': 'Contacte',
     'contact.title': 'Construïm el pont entre models i eines.',
     'contact.body': 'Obert a feina i col·laboració en plataformes .NET, eines de desenvolupament amb IA i tot el que necessiti connectar LLM amb sistemes reals. Tot el codi és públic — comença-hi.',
+    'contact.cta.cv': 'CV (PDF)',
 
     'footer.location': 'Catalunya, Espanya · @ Pasiona'
   }
