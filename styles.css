@@ -5,7 +5,7 @@
   --display: 'Space Grotesk', system-ui, sans-serif;
   --body:    'Inter', system-ui, sans-serif;
   --mono:    'JetBrains Mono', ui-monospace, monospace;
-  --maxw: 1120px;
+  --maxw: min(1440px, 90vw);
 }
 
 [data-theme="dark"] {

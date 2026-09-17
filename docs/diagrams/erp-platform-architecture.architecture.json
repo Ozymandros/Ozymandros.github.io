@@ -1,0 +1,461 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "ERP Microservices Platform",
+    "output": "erp-platform-architecture.html",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/Ozymandros/ERP.Microservices",
+      "revision": "4a63c1403e01e45b8321af75112bd90868670ae0"
+    },
+    "viewBox": [
+      1350,
+      720
+    ],
+    "views": [
+      {
+        "id": "request-path",
+        "label": "Request path",
+        "focus": [
+          "clients",
+          "gateway",
+          "sell",
+          "selldb"
+        ],
+        "note": "A client call enters Ocelot and lands in one service that owns its own database."
+      },
+      {
+        "id": "identity",
+        "label": "Identity",
+        "focus": [
+          "gateway",
+          "auth",
+          "authdb"
+        ],
+        "note": "Auth issues the JWT that the gateway and every service validate with the shared signing key."
+      },
+      {
+        "id": "events",
+        "label": "Event backbone",
+        "focus": [
+          "sell",
+          "supply",
+          "platform",
+          "pubsub",
+          "redis"
+        ],
+        "note": "Domain events travel over the Dapr pub/sub component instead of direct service calls."
+      },
+      {
+        "id": "orchestration",
+        "label": "Orchestration",
+        "focus": [
+          "apphost",
+          "gateway",
+          "pubsub",
+          "redis"
+        ],
+        "note": "The Aspire AppHost wires ports, sidecars, Dapr components and secrets."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "clients",
+      "type": "external",
+      "label": "Clients",
+      "sublabel": "Web / mobile front ends",
+      "pos": [
+        40,
+        50
+      ],
+      "size": [
+        180,
+        76
+      ]
+    },
+    {
+      "id": "gateway",
+      "type": "cloud",
+      "label": "ErpApiGateway",
+      "sublabel": "Ocelot · /{service}/api/** → :8080",
+      "tag": "http :5000 · https :7231",
+      "pos": [
+        40,
+        220
+      ],
+      "size": [
+        300,
+        108
+      ],
+      "sources": [
+        {
+          "path": "src/ErpApiGateway/ocelot.json",
+          "label": "route table"
+        }
+      ]
+    },
+    {
+      "id": "apphost",
+      "type": "cloud",
+      "label": ".NET Aspire AppHost",
+      "sublabel": "sidecars · ports 6001+ · secrets",
+      "pos": [
+        40,
+        400
+      ],
+      "size": [
+        300,
+        92
+      ],
+      "sources": [
+        {
+          "path": "src/AppHost/Program.cs",
+          "label": "distributed app"
+        }
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "database",
+      "label": "Redis \"cache\"",
+      "sublabel": "state.redis + cache-aside",
+      "pos": [
+        40,
+        566
+      ],
+      "size": [
+        300,
+        80
+      ]
+    },
+    {
+      "id": "auth",
+      "type": "security",
+      "label": "Auth",
+      "sublabel": "auth-service :6001",
+      "tag": "token issuer",
+      "pos": [
+        560,
+        50
+      ],
+      "size": [
+        290,
+        84
+      ]
+    },
+    {
+      "id": "sell",
+      "type": "backend",
+      "label": "Sell-side contexts",
+      "sublabel": "crm :6003 · sales :6007 · billing :6002",
+      "tag": "customer + pricing",
+      "pos": [
+        560,
+        172
+      ],
+      "size": [
+        290,
+        84
+      ]
+    },
+    {
+      "id": "supply",
+      "type": "backend",
+      "label": "Supply & fulfilment",
+      "sublabel": "purchasing :6006 · inventory :6004 · orders :6005",
+      "tag": "stock + movement",
+      "pos": [
+        560,
+        294
+      ],
+      "size": [
+        290,
+        84
+      ]
+    },
+    {
+      "id": "platform",
+      "type": "backend",
+      "label": "Platform services",
+      "sublabel": "agentic :6008 · audit :6009",
+      "pos": [
+        560,
+        416
+      ],
+      "size": [
+        290,
+        84
+      ]
+    },
+    {
+      "id": "pubsub",
+      "type": "messagebus",
+      "label": "Dapr pub/sub",
+      "sublabel": "component \"pubsub\" · pubsub.redis",
+      "pos": [
+        560,
+        566
+      ],
+      "size": [
+        630,
+        80
+      ],
+      "sources": [
+        {
+          "path": "src/MyApp.Shared/MyApp.Shared.Domain/Constants/ProjectConstants.cs",
+          "label": "topic names"
+        }
+      ]
+    },
+    {
+      "id": "authdb",
+      "type": "database",
+      "label": "AuthDB",
+      "sublabel": "SQL Server",
+      "pos": [
+        940,
+        56
+      ],
+      "size": [
+        250,
+        72
+      ]
+    },
+    {
+      "id": "selldb",
+      "type": "database",
+      "label": "Sell-side DBs",
+      "sublabel": "CrmDB · SalesDB · BillingDB",
+      "pos": [
+        940,
+        178
+      ],
+      "size": [
+        250,
+        72
+      ]
+    },
+    {
+      "id": "supplydb",
+      "type": "database",
+      "label": "Supply DBs",
+      "sublabel": "PurchasingDB · InventoryDB · OrderDB",
+      "pos": [
+        940,
+        300
+      ],
+      "size": [
+        250,
+        72
+      ]
+    },
+    {
+      "id": "platformdb",
+      "type": "database",
+      "label": "Platform DBs",
+      "sublabel": "AgenticDB · AuditDB",
+      "pos": [
+        940,
+        422
+      ],
+      "size": [
+        250,
+        72
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Dapr sidecar per service · app-id {service}-service",
+      "wraps": [
+        "auth",
+        "sell",
+        "supply",
+        "platform"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "clients-gateway",
+      "from": "clients",
+      "to": "gateway",
+      "label": "HTTPS",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "gateway-auth",
+      "from": "gateway",
+      "to": "auth",
+      "label": "/auth/api/** · Bearer",
+      "variant": "security"
+    },
+    {
+      "id": "gateway-sell",
+      "from": "gateway",
+      "to": "sell"
+    },
+    {
+      "id": "gateway-supply",
+      "from": "gateway",
+      "to": "supply"
+    },
+    {
+      "id": "gateway-platform",
+      "from": "gateway",
+      "to": "platform"
+    },
+    {
+      "id": "auth-db",
+      "from": "auth",
+      "to": "authdb",
+      "label": "EF Core"
+    },
+    {
+      "id": "sell-db",
+      "from": "sell",
+      "to": "selldb"
+    },
+    {
+      "id": "supply-db",
+      "from": "supply",
+      "to": "supplydb"
+    },
+    {
+      "id": "platform-db",
+      "from": "platform",
+      "to": "platformdb"
+    },
+    {
+      "id": "sell-events",
+      "from": "sell",
+      "to": "pubsub",
+      "label": "sales.* · crm.*",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [
+        [
+          705,
+          275
+        ],
+        [
+          1290,
+          275
+        ],
+        [
+          1290,
+          682
+        ],
+        [
+          875,
+          682
+        ]
+      ],
+      "labelAt": [
+        1010,
+        265
+      ]
+    },
+    {
+      "id": "supply-events",
+      "from": "supply",
+      "to": "pubsub",
+      "label": "orders.* · inventory.*",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "via": [
+        [
+          705,
+          397
+        ],
+        [
+          1250,
+          397
+        ],
+        [
+          1250,
+          606
+        ]
+      ],
+      "labelAt": [
+        1010,
+        387
+      ]
+    },
+    {
+      "id": "platform-events",
+      "from": "platform",
+      "to": "pubsub",
+      "label": "audit.entity-changes.saved",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "pubsub-redis",
+      "from": "pubsub",
+      "to": "redis",
+      "label": "backed by Redis",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "apphost-gateway",
+      "from": "apphost",
+      "to": "gateway",
+      "label": "ports · Jwt__SecretKey",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "apphost-components",
+      "from": "apphost",
+      "to": "redis",
+      "label": "AddRedis + Dapr components",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        190,
+        529
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Edge & identity",
+      "items": [
+        "Ocelot maps /{service}/api/** to {service}-service:8080",
+        "Bearer auth on every route except login, register, refresh",
+        "Aspire injects Jwt__SecretKey into the gateway and all services"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Services & data",
+      "items": [
+        "Nine .NET 10 services on 6001-6009, Clean Architecture in each",
+        "SQL Server myapp-sqlserver holds one {Service}DB per service",
+        "Redis backs Dapr state plus ICacheService cache-aside"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Events",
+      "items": [
+        "Dapr pub/sub component \"pubsub\" over Redis, sidecars from 3501",
+        "Topics: sales.*, crm.*, orders.*, inventory.*, purchasing.*, audit.*",
+        "Subscribers are [Topic] controllers under /api/events/*"
+      ]
+    }
+  ]
+}
