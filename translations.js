@@ -132,7 +132,7 @@ const TRANSLATIONS = {
     'credentials.lang': 'Languages',
     'credentials.lang.es': 'Spanish (Native)',
     'credentials.lang.ca': 'Catalan (Native)',
-    'credentials.lang.en': 'English (B1)',
+    'credentials.lang.en': 'English (B2)',
     'credentials.cv.intro': 'Summarized on this page — <a href="./CV_Andreu_Martinez_Optimizado.pdf" target="_blank" rel="noopener">download the full résumé (PDF)</a> for roles in .NET, cloud-native, and AI developer tooling.',
 
     'contact.label': 'Get in touch',
@@ -277,7 +277,7 @@ const TRANSLATIONS = {
     'credentials.lang': 'Idiomas',
     'credentials.lang.es': 'Español (Nativo)',
     'credentials.lang.ca': 'Catalán (Nativo)',
-    'credentials.lang.en': 'Inglés (B1)',
+    'credentials.lang.en': 'Inglés (Avanzado)',
     'credentials.cv.intro': 'Resumido en esta página — <a href="./CV_Andreu_Martinez_Optimizado.pdf" target="_blank" rel="noopener">descarga el CV completo (PDF)</a> para roles en .NET, cloud-native y herramientas de desarrollo con IA.',
 
     'contact.label': 'Contacto',
@@ -422,7 +422,7 @@ const TRANSLATIONS = {
     'credentials.lang': 'Idiomes',
     'credentials.lang.es': 'Espanyol (Natiu)',
     'credentials.lang.ca': 'Català (Natiu)',
-    'credentials.lang.en': 'Anglès (B1)',
+    'credentials.lang.en': 'Anglès (Avançat)',
     'credentials.cv.intro': 'Resumit en aquesta pàgina — <a href="./CV_Andreu_Martinez_Optimizado.pdf" target="_blank" rel="noopener">descarrega el CV complet (PDF)</a> per a rols en .NET, cloud-native i eines de desenvolupament amb IA.',
 
     'contact.label': 'Contacte',
